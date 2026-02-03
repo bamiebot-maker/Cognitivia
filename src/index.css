@@ -1,0 +1,388 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+@import "@heroui/styles";
+
+:root {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  color-scheme: dark;
+  background-color: #0b0d14;
+  --bg: #0b0d14;
+  --bg-alt: #05070b;
+  --fg: #e4e9f2;
+  --fg-muted: rgba(228, 233, 242, 0.7);
+  --fg-soft: rgba(228, 233, 242, 0.5);
+  --panel: rgba(16, 19, 32, 0.72);
+  --panel-strong: rgba(16, 19, 32, 0.92);
+  --border: rgba(255, 255, 255, 0.14);
+  --accent: #6de0f6;
+  --accent-strong: #9b7cff;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+.light {
+  color-scheme: light;
+  --bg: #f3f6ff;
+  --bg-alt: #e6edf8;
+  --fg: #111827;
+  --fg-muted: rgba(17, 24, 39, 0.7);
+  --fg-soft: rgba(17, 24, 39, 0.5);
+  --panel: rgba(255, 255, 255, 0.9);
+  --panel-strong: rgba(255, 255, 255, 0.98);
+  --border: rgba(15, 23, 42, 0.14);
+  --accent: #3b82f6;
+  --accent-strong: #1d4ed8;
+  --shadow: rgba(15, 23, 42, 0.12);
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Fraunces", "Space Grotesk", serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, rgba(40, 64, 92, 0.45), transparent 55%),
+    radial-gradient(circle at 15% 30%, rgba(146, 75, 109, 0.25), transparent 45%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+  color: var(--fg);
+}
+
+html.light body {
+  background: radial-gradient(circle at top, rgba(59, 130, 246, 0.18), transparent 55%),
+    radial-gradient(circle at 15% 30%, rgba(255, 157, 108, 0.16), transparent 45%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-gradient {
+  background: linear-gradient(120deg, #6de0f6 0%, #9b7cff 50%, #ff9d6c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.floating-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at top, black 0%, transparent 70%);
+}
+
+html.light .floating-grid {
+  background-image: linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+}
+
+.logo-frame {
+  background: #ffffff;
+}
+
+html.light .logo-frame {
+  background: #0b0d14;
+}
+
+.logo-image {
+  padding: 6px;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.nav-pill {
+  position: relative;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  color: var(--fg-muted);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.nav-pill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-pill:hover {
+  color: var(--fg);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 24px var(--shadow);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-pill:hover::after {
+  border-color: var(--accent);
+  transform: scale(1.03);
+  opacity: 1;
+}
+
+.nav-pill-active {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-pill-active::after {
+  border-color: var(--accent-strong);
+  transform: scale(1.03);
+  opacity: 1;
+}
+
+.dashboard-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dashboard-orb {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 9999px;
+  filter: blur(24px);
+  opacity: 0.55;
+  animation: drift 12s ease-in-out infinite;
+}
+
+.dashboard-orb.orb-one {
+  top: -120px;
+  right: -80px;
+  background: radial-gradient(circle at top, var(--accent), transparent 70%);
+}
+
+.dashboard-orb.orb-two {
+  bottom: -120px;
+  left: -80px;
+  background: radial-gradient(circle at top, #ff9d6c, transparent 70%);
+  animation-delay: 2s;
+}
+
+.dashboard-orb.orb-three {
+  top: 30%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at top, var(--accent-strong), transparent 70%);
+  animation-delay: 4s;
+}
+
+.footer-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--panel-strong);
+  backdrop-filter: blur(16px);
+}
+
+.theme-tag {
+  color: var(--fg-muted);
+}
+
+.mobile-dock {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: min(92vw, 420px);
+  height: 68px;
+  padding: 12px 14px;
+  border-radius: 26px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 40px var(--shadow);
+  backdrop-filter: blur(18px);
+  z-index: 50;
+}
+
+.mobile-dock-bump {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 9999px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 32px var(--shadow);
+  z-index: 0;
+}
+
+.mobile-dock-nav {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  height: 100%;
+}
+
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 20px;
+  color: var(--fg-soft);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.dock-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dock-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.dock-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dock-item-active {
+  color: var(--fg);
+}
+
+.dock-item-active .dock-icon-wrap {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #0b0d14;
+}
+
+.dock-item-active {
+  transform: translateY(-20px);
+}
+
+.dock-item-active .dock-icon-wrap {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 20px var(--shadow);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 9999px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-toggle:hover {
+  box-shadow: 0 10px 18px var(--shadow);
+}
+
+.theme-toggle-compact {
+  padding: 4px;
+  gap: 0;
+}
+
+.theme-toggle-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.theme-toggle-track {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s ease;
+}
+
+.theme-toggle[data-theme='light'] .theme-toggle-thumb {
+  transform: translateX(24px);
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(20px, -30px, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20 {
+  border-color: var(--border);
+}
